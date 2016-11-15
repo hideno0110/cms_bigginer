@@ -14,7 +14,7 @@ class AddUsersTable extends Migration
     public function up()
     {
       Schema::table('users', function (Blueprint $table) {
-        $table->integer('photo_id')->index()->unsigned();
+        $table->integer('photo_id')->index()->unsigned()->default(0);
       
       });
         
