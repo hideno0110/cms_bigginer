@@ -9,7 +9,7 @@ use App\User;
 use App\Category;
 use App\Http\Requests\PostsCreateRequest;
 use Auth;
-  
+use DB;
 
 class AdminPostsController extends Controller
 {
@@ -21,8 +21,8 @@ class AdminPostsController extends Controller
     public function index()
     {
 
-        $posts = Post::all();
-
+        $posts = Post::paginate(2);
+      
         return view('admin.posts.index',compact('posts'));
 //
     }
@@ -99,7 +99,7 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $post = Post::findOrFail($id);
+    //  $post = Post::findOrFail($id);
       
       $input = $request->all();
 
@@ -109,7 +109,9 @@ class AdminPostsController extends Controller
         $input['photo_id'] = $photo->id;
       }
  
-      $post->update($input);
+     //  $post->update($input);
+      Auth::user()->posts()->whereId($id)->first()->update($input);
+      
 
       return redirect('admin/posts');
     }
@@ -123,7 +125,11 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id)->delete();
+        
+        unlink(public_path() . $post->photo->file);
+
+        $post->delete();
 
         return redirect('/admin/posts')->with('post_delete', 'deleted');
     }

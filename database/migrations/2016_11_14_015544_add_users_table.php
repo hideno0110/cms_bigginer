@@ -21,7 +21,6 @@ class AddUsersTable extends Migration
 
 //
     }
-
     /**
      * Reverse the migrations.
      *
@@ -29,8 +28,8 @@ class AddUsersTable extends Migration
      */
     public function down()
     {
-      Schema::dropTable('users', function (Blueprint $table) {
-        $table->integer('photo_id')->index()->unsigned();
+      Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('photo_id');
       
       });
  
