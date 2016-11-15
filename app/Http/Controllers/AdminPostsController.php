@@ -133,4 +133,13 @@ class AdminPostsController extends Controller
 
         return redirect('/admin/posts')->with('post_delete', 'deleted');
     }
+    
+    public function post($id)
+    {
+      
+      $post = Post::findOrFail($id);
+
+
+      return view('post',compact('post'));
+    }
 }
