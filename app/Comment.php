@@ -13,14 +13,14 @@ class Comment extends Model
       'is_active',
       'author',
       'email',
-      'baody',
+      'body',
     ];
 
     
-//    public function post() 
-//    {
-//      return belongsTo('App\Post');
-//    }
+   public function post() 
+   {
+     return belongsTo('App\Post');
+   }
 
     public function replies()
     {
